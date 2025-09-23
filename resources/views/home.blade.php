@@ -2,5 +2,4 @@
     <x-slot:heading>
         Home page
     </x-slot:heading>
-    <h1>hey...</h1>
 </x-layout>
