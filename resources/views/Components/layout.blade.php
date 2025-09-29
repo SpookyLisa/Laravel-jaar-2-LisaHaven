@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="icon" type="image/x-icon" href="https://www.freeiconspng.com/thumbs/black-cat-icon/black-cat-icon-11.png">
 </head>
 <body class="h-full">
 <div class="min-h-full">
-  <nav class="bg-gray-800">
+  <nav class="bg-gray-700">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <div class="flex items-center">
           <div class="shrink-0">
-            <img src="https://marketplace.canva.com/3f3kg/MAFmjG3f3kg/1/tl/canva-cat-face-MAFmjG3f3kg.png" alt="Kitty" class="size-10" />
+            <img src="https://www.freeiconspng.com/thumbs/black-cat-icon/black-cat-icon-11.png" alt="Kitty" class="size-12" />
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
