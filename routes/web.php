@@ -20,11 +20,15 @@ Route::get('/jobs/create', function() {
 
 Route::get('/jobs/{id}', function ($id) {
     $job = Job::find($id);
-    
+
     return view('jobs.show', ['job' => $job]);
 });
 
 Route::post('/jobs', function () {
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required', 'numeric']
+    ]);
 
     Job::create([
         'title' => request('title'),
@@ -33,7 +37,7 @@ Route::post('/jobs', function () {
     ]);
 
     return redirect('/jobs');
-       
+
 });
 
 Route::get('/contact', function () {
