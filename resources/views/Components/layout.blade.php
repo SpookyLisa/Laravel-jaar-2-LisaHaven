@@ -39,8 +39,17 @@
                             @endguest
 
                             @auth
-                            <x-nav-link href="/logout">Log out</x-nav-link>
-                            @endauth
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button
+                                    type="submit"
+                                    class="text-gray-300 hover:bg-white/5 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                >
+                                    Log Out
+                                </button>
+                            </form>
+                        @endauth
+
                             </div>
                         </div>
                         <div class="-mr-2 flex md:hidden">
@@ -119,7 +128,7 @@
                 </div>
             </header>
             <main>
-                
+
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     {{ $slot }}
                 </div>

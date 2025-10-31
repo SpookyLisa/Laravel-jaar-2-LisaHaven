@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use App\Models\User;
 use App\Mail\JobPosted;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
@@ -16,7 +13,9 @@ class JobController extends Controller
     public function index()
     {
         $jobs = Job::with('employer')->latest()->simplePaginate(3);
-        return view('jobs.index', ['jobs' => $jobs]);
+           return view('jobs.index', [
+            'jobs' => $jobs
+        ]);
     }
 
     public function create()
@@ -24,11 +23,16 @@ class JobController extends Controller
         return view('jobs.create');
     }
 
+     public function show(Job $job)
+    {
+        return view('jobs.show', ['job' => $job]);
+    }
+
     public function store()
     {
         request()->validate([
             'title' => ['required', 'min:3'],
-            'salary' => ['required', 'numeric']
+            'salary' => ['required']
         ]);
 
         $job = Job::create([
@@ -41,15 +45,8 @@ class JobController extends Controller
             new JobPosted($job)
         );
 
-        return 'Done!';
 
         return redirect('/jobs');
-    }
-
-
-    public function show(Job $job)
-    {
-        return view('jobs.show', ['job' => $job]);
     }
 
     public function edit(Job $job)
@@ -59,6 +56,7 @@ class JobController extends Controller
 
     public function update(Job $job)
     {
+        Gate::authorize('edit-job', $job);
         request()->validate([
             'title' => ['required', 'min:3'],
             'salary' => ['required']
@@ -74,6 +72,7 @@ class JobController extends Controller
 
     public function destroy(Job $job)
     {
+        Gate::authorize('edit-job', $job);
         $job->delete();
         return redirect('/jobs');
     }
