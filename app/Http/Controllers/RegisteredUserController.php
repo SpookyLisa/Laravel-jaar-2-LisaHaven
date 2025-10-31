@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 class RegisteredUserController extends Controller
 {
@@ -26,6 +28,8 @@ class RegisteredUserController extends Controller
             'password' => ['required', Password::min(6), 'confirmed'],
         ]);
 
+    
+     $attributes['password'] = Hash::make($attributes['password']);
       $user =  User::create($attributes);
 
         Auth::login($user);
