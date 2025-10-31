@@ -60,6 +60,7 @@
                                 </svg>
                             </button>
                         </div>
+
                     </div>
                 </div>
              <el-disclosure id="mobile-menu" hidden class="block md:hidden">
@@ -82,6 +83,7 @@
                                 <div class="text-base/5 font-medium text-white">Tom Cook</div>
                                 <div class="text-sm font-medium text-gray-400">tom@example.com</div>
                             </div>
+
                             <button type="button"
                                 class="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
                                 <span class="absolute -inset-1.5"></span>
@@ -94,6 +96,7 @@
                                 </svg>
                             </button>
                         </div>
+
                      <div class="mt-3 space-y-1 px-2">
                             <a href="/"
                                 class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white">Your
@@ -105,6 +108,7 @@
                                 out</a>
                         </div>
                     </div>
+
                 </el-disclosure>
             </nav>
              <header
@@ -115,6 +119,7 @@
                 </div>
             </header>
             <main>
+                
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     {{ $slot }}
                 </div>
