@@ -2,29 +2,60 @@
 
 namespace Database\Factories;
 
-use App\Models\Employer;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Job;
+use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Job>
- */
-class JobFactory extends Factory
+class JobController extends Controller
 {
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
+     * Display a listing of the resource.
      */
-    public function definition(): array
+    public function index()
     {
-        return [
-            'employer_id' => Employer::factory(),
-            'title' => fake()->jobTitle,
-            'salary' => fake()->randomElement(['$50,000 USD', '$90,000 USD', '$150,000 USD']),
-            'location' => 'Remote',
-            'schedule' => 'Full Time',
-            'url' => fake()->url,
-            'featured' => false,
-        ];
+        $jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
+
+        return view('jobs.index', [
+             'jobs' => $jobs[0],
+            'featuredJobs' => $jobs[1],
+            'tags' => Tag::all(),
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+         return view('jobs.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $attributes = $request->validate([
+        'title' => ['required'],
+        'salary' => ['required'],
+        'location' => ['required'],
+        'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
+        'url' => ['required', 'active_url'],
+        'tags' => ['nullable'],
+    ]);
+
+    $attributes['featured'] = $request->has('featured');
+
+    $job = Auth::user()->employer->jobs()->create(Arr::except($attributes, 'tags'));
+
+     if ($attributes['tags'] ?? false) {
+            foreach (explode(',', $attributes['tags']) as $tag) {
+                $job->tag($tag);
+            }
+        }
+        return redirect('/');
     }
 }
